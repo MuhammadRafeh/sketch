@@ -13,12 +13,16 @@ import Animated, {
 {/* <Svg height="50%" width="50%" viewBox="0 0 100 100" >
   <Circle cx="40" cy="50" r="20" fill="black" />
 </Svg> */}
+const SKETCH_WIDTH = 500
+const SKETCH_HEIGHT = 500
 
 export default function AnimatedStyleUpdateExample() {
 
   const isZoom = useSharedValue(false);
   const isDrawing = useSharedValue(false);
   const scale = useSharedValue(1);
+  // const focalX = useSharedValue(0);
+  // const focalY = useSharedValue(0);
 
   const pinchHandler = useAnimatedGestureHandler<PinchGestureHandlerGestureEvent>({
     onStart: (e, ctx: any) => {
@@ -31,19 +35,32 @@ export default function AnimatedStyleUpdateExample() {
     },
     onActive: (e, ctx: any) => {
       scale.value = e.scale - (1-ctx.scale);
-      console.log(scale.value)
+      // focalX.value = e.focalX
+      // focalY.value = e.focalY
+      // console.log(e.focalX)
+      
+      // console.log("focalX", e.focalX)
     },
     onFinish: (e) => {
       isZoom.value = false;
       isDrawing.value = false;
-
+      // focalX.value = 0;
+      // focalY.value = 0;
     }
   })
 
   const style = useAnimatedStyle(() => {
     return {
       transform: [
-        { scale: scale.value }
+        // { translateX: focalX.value },
+        // { translateY: focalY.value },
+        // { translateX: -SKETCH_WIDTH / 2 },
+        // { translateY: -SKETCH_HEIGHT / 2 },
+        { scale: scale.value },
+        // { translateX: -focalX.value },
+        // { translateY: -focalY.value },
+        // { translateX: SKETCH_WIDTH / 2 },
+        // { translateY: SKETCH_HEIGHT / 2 },
       ]
     }
   })
